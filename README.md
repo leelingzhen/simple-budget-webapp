@@ -4,6 +4,15 @@ A simple implementation of a personal budget management in a dockerized flask we
 
 
 #### Getting Started
+First clone the repository and go into that directory
+
+```
+git clone https://github.com/leelingzhen/simple-budget-webapp.git
+cd simple-budget-webapp
+```
+
+Build and run docker container 
+
 Using docker:
 
 ```
@@ -25,6 +34,36 @@ services:
     volumes:
       - .:/budget
 ```
+
+Alternatively, if you wish to not use docker you can use uwsgi to host the app in production mode.  
+
+First create a virtualenv
+```
+apt-get update && apt-get upgrade -y
+apt-get install -y python3-pip python-dev
+mkdir venv-flask
+python3 -m venv venv-flask
+```
+
+activate venv-flask
+```
+source ./venv-flask/bin/activate
+```
+
+update pip and install requirements
+
+```
+python -m pip --upgrade install pip
+pip install -r requirements.txt
+```
+
+start uwsgi server at port 5050
+```
+uwsgi --protocol=http -w application:app --socket 0.0.0.0:5050 
+```
+
+the webapp will be available at http://"your-ip-address":5050
+
 
 #### Todo
 - Add text colours to balances in summary page
