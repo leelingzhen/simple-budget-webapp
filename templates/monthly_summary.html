@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Summary
+{% endblock %}
+
+{% block main %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Expenditure', 'Total $ in a month'],
+			{% for label, expense in stats.items() %}
+				['{{label}}', {{expense}}],
+			{% endfor %}
+			["blank", 0]
+        ]);
+
+        var options = {
+          title: 'Monthly Expenditure'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    	var formatter = new google.visualization.NumberFormat({
+         	prefix: '$'
+    	});
+		formatter.format(data,1);
+        chart.draw(data, options);
+      }
+	</script>
+<form action="/monthly_summary" method="post">
+		<div class='form-group'>
+			<input type="month" name="month" value={{month_input}}> 
+			<button class="btn btn-primary" type="submit">Select Month</button>
+	<div id="piechart" style="width: 900px; height: 500px" align="right"></div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<td colspan='2'>Summary</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for row in table_output %}
+		<tr>
+			<td>{{row[0]}}</td><td>{{row[1] | usd}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

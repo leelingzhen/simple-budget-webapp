@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+  
+    <form action="/add_entry" method="post">
+        <div class="form-group">
+			<input type="datetime-local" name="datetime" value={{datetime_now}}>
+			<select class="form-control" name="category">
+				<option disabled selected value="">Category</option>
+				{% for category in categories %}
+				<option value={{category}}>{{category}}</option>
+				{% endfor %}
+			</select>
+			<input autocomplete="off" class="form-control" name="amount" placeholder="amount" type="number" step="0.01" min="0.01">
+			<input type="checkbox" name="add_cash" value="yes"> <a href=" " title="Check this option to add cash instead of adding the entry as expenditure">Add (?)</a>
+			<input autocomplete="off" class="form-control" name="remarks" placeholder="Remarks" type="text">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit Entry</button>
+	</form>
+
+
+{% endblock %}

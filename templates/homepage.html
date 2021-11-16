@@ -1,0 +1,43 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Entry
+{% endblock %}
+
+{% block main %}
+<form action="/" method="post">
+	<div class="form-group">
+		<input type="date" name="date" value={{display_date}}>
+		<button class="btn btn-primary" type="submit" value={{display_date}}>Goto Date</button>
+	</div>
+</form>
+<table>
+	<thead>
+		<tr>
+			<td>Time</td> <td>Category</td> <td>Amount</td> <td>Remarks</td> <td>Select</td>
+		</tr>
+	</thead>
+	<form action="/edit_entry" id="edit_entry">
+	<tbody>
+		{% for entry in day_entries %}
+		<tr>
+			<td>{{entry.timestamp}}</td> <td>{{entry.category}}</td> <td>{{entry.amount | usd }}</td> <td>{{entry.remarks}}</td> <td><input type='radio' name='edit' value={{entry.id}}></td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td>Remaining Day Funds</td> <td></td> <td>{{day_budget_balance | usd}}</td> <td></td> <td></td>
+		</tr> 
+		<tr>
+			<td>Remaining Monthly Funds</td> <td></td> <td>{{month_budget_balance | usd}}</td> <td></td><td></td>
+		</tr>
+	</tbody>
+	</form>
+</table>
+<form id="add_entry" action="/add_entry">
+	<div class="form-group">
+		<button form=add_entry class="btn btn-primary" type="submit">Add Entry</button>
+		<button form=edit_entry class="btn btn-primary" type="submit">Edit Entry</button>
+	</div>
+</form>
+{% endblock %}
