@@ -17,7 +17,7 @@ docker:
 
 ```
 docker pull ghcr.io/leelingzhen/simple-budget-webapp:latest
-docker run -d -p 5000:5000 budget
+docker run -d -p 5000:5000 -v .:/budget budget
 ```
 
 or using docker-compose,
@@ -31,7 +31,7 @@ services:
     ports: 
       - "5000:5000"
     volumes:
-      - .:/simple-budget-webapp
+      - .:/budget
 ```
 
 ##### Or, Secondly, buildi && run image from source:
@@ -53,7 +53,7 @@ services:
     ports: 
       - "5000:5000"
     volumes:
-      - .:/simple-budget-webapp
+      - .:/budget
 ```
 
 ##### Alternatively, if you wish to not use docker,  use uwsgi to host the app in production mode.  
