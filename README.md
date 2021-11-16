@@ -1,23 +1,23 @@
 # Simple Daily Budget
-#### Description:
-A simple implementation of a personal budget management in a dockerized flask webapp. This project was originally used as submission for CS50X's final project.
+### Description:
+A simple implementation of a personal budget management in a dockerized flask webapp. This project was originally used as submission for CS50X's final project. Currently hosted on a personal server
 
 
-#### Getting Started
-First clone the repository and go into that directory
+### Getting Started
+##### First, clone the repository and go into that directory
 
 ```
 git clone https://github.com/leelingzhen/simple-budget-webapp.git
 cd simple-budget-webapp
 ```
 
-Build and run docker container 
+##### Secondly, pull latest image using docker && run
 
-Using docker:
+docker:
 
 ```
-docker build --tag budget .
-docker run -d -p 5050:5050 budget
+docker pull ghcr.io/leelingzhen/simple-budget-webapp:latest
+docker run -d -p 5000:5000 budget
 ```
 
 or using docker-compose,
@@ -27,15 +27,36 @@ Sample docker-compose.yml:
 version: "3.7"
 services:
   budget:
-    container_name: budget
-    build: .
+    image: ghcr.io/leelingzhen/simple-budget-webapp:latest
     ports: 
-      - "5050:5050"
+      - "5000:5000"
     volumes:
-      - .:/budget
+      - .:/simple-budget-webapp
 ```
 
-Alternatively, if you wish to not use docker you can use uwsgi to host the app in production mode.  
+##### Or, Secondly, buildi && run image from source:
+
+docker:
+
+```
+docker build --tag simple-budget-webapp .
+docker run -d -p 5000:5000 budget
+```
+
+buidling and running with docker-compose:
+```
+version: "3.7"
+services:
+  budget:
+    image: simple-budget-webapp
+	build: .
+    ports: 
+      - "5000:5000"
+    volumes:
+      - .:/simple-budget-webapp
+```
+
+##### Alternatively, if you wish to not use docker,  use uwsgi to host the app in production mode.  
 
 First create a virtualenv
 ```
@@ -57,12 +78,12 @@ python -m pip --upgrade install pip
 pip install -r requirements.txt
 ```
 
-start uwsgi server at port 5050
+start uwsgi server at port 5000
 ```
-uwsgi --protocol=http -w application:app --socket 0.0.0.0:5050 
+uwsgi --protocol=http -w application:app --socket 0.0.0.0:5000 
 ```
 
-the webapp will be available at http://"your-ip-address":5050
+the webapp will be available at http://"your-ip-address":5000
 
 
 #### Todo
