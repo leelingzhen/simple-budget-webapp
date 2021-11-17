@@ -90,4 +90,5 @@ the webapp will be available at http://"your-ip-address":5000
 - Add text colours to balances in summary page
 	- green for positive balance
 	- red for negative balance
+- Dark Theme
 - Add yearly summary trending line 
